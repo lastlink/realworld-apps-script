@@ -13,7 +13,11 @@ function RegisterUser(e) {
   return e;
 }
 
-function GetProfile(e) {
+function GetCurrentProfile(e) {
   return e;
 }
-export default { LoginUser, UpdateProfile, RegisterUser, GetProfile };
+
+function GetUserProfile(e) {
+  return e;
+}
+export default { LoginUser, UpdateProfile, RegisterUser, GetCurrentProfile, GetUserProfile };

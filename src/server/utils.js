@@ -19,4 +19,16 @@ const expBackoff = func => {
 
 const hasCpuTime = () => !(Date.now() - START_TIME > ONE_MINUTE * 4);
 
-export { expBackoff, hasCpuTime };
+function addHeadings(posts, headings) {
+  return posts.map(function(postAsArray) {
+    const postAsObj = {};
+
+    headings.forEach(function(heading, i) {
+      postAsObj[heading] = postAsArray[i];
+    });
+
+    return postAsObj;
+  });
+}
+
+export { expBackoff, hasCpuTime, addHeadings };

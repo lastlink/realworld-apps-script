@@ -79,11 +79,11 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      {
-        from: `${src}/**/*.html`,
-        flatten: true,
-        to: destination
-      },
+      // {
+      //   from: `${src}/**/*.html`,
+      //   flatten: true,
+      //   to: destination
+      // },
       {
         from: `${src}/../appsscript.json`,
         to: destination

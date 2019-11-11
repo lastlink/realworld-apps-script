@@ -1,15 +1,18 @@
-const useMock = false;
+// paste this in to the live ide to enable
+// var useMock = true;
 const mock = {
-    postMethod: true,
+    postMethod: false,
     eGet: {
-        parameter: {
-            key: 'asdf'
+        "parameter": {
+            "method": "/api/articles/"
         },
-        contextPath: '',
-        contentLength: -1,
-        queryString: 'key=asdf',
-        parameters: {
-            key: ['asdf']
+        "contextPath": "",
+        "contentLength": -1,
+        "queryString": "method=/api/articles",
+        "parameters": {
+            "method": [
+                "/api/articles"
+            ]
         }
     },
     ePost: {
@@ -38,4 +41,4 @@ const mock = {
     }
 };
 
-export { useMock, mock };
+export { mock };
