@@ -10,6 +10,7 @@
   "main": "src/index.js",
   "scripts": {
     "build": "webpack",
+    "watch": "cross-env NODE_ENV=watch npm run build",
     "upload": "clasp push",
     "deploy": "npm run build && npm run upload",
     "deploy:prod": "cross-env NODE_ENV=production npm run deploy"

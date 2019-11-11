@@ -17,11 +17,16 @@ const { version } = require('./package.json');
 const src = path.resolve(__dirname, 'src');
 const destination = path.resolve(__dirname, 'dist');
 const isProduction = process.env.NODE_ENV === 'production';
+const isWatched = process.env.NODE_ENV === 'watch';
 
 module.exports = {
   mode: isProduction ? 'production' : 'none',
   context: __dirname,
   entry: `${src}/index.js`,
+  watch: isWatched,
+  watchOptions: {
+    ignored: /node_modules/
+  },
   output: {
     filename: `code-${version}.js`,
     path: destination,
