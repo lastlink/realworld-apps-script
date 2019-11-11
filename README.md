@@ -21,6 +21,9 @@
 
 - `npm run deploy`
 - `npm run deploy:prod` Deploy the project (production mode)
+- faster development
+  - `npm run watch` can auto build webpack files for dev mode for faster development cycle
+  - `npm run upload` manually upload **dist** files
 
 ## Proxy
 
