@@ -30,6 +30,8 @@
 - see [ref](https://github.com/softius/php-cross-domain-proxy/blob/master/proxy.php)
   - proxy allows cors issues to be resolved while in browser
   - also DELETE and PUT requests will be forced to POST requests
+  - besides content-type in POST request doesn't support headers, proxy will accept `Authorization: Token {{token}}` and will forward in post body
+
 - run simple server
   - `cd proxy`
   - `php -S localhost:8000`

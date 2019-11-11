@@ -14,6 +14,7 @@ function buildSuccessResponse(result) {
 
 function buildErrorResponse(message, code) {
   const output = JSON.stringify({
+    code,
     errors: message,
     message
   });
@@ -39,6 +40,7 @@ const doPost = e => {
     return buildErrorResponse('Content Type should be application/json', 405);
   }
   let response = null;
+  const authorized = false;
   switch (request.parameter.method) {
     case '/api/users/login':
       // POST
@@ -46,11 +48,13 @@ const doPost = e => {
       return buildSuccessResponse(response);
     case '/api/users':
       // POST
+      // requires authentication
       response = AuthService.UpdateProfile(request);
       return buildSuccessResponse(response);
-    case '/api/user':
-      // PUT
-      response = AuthService.RegisterUser(request);
+    case '/api/articles/feed':
+      // GET /api/articles/feed
+      // requires authentication, gets articles by followed users
+      response = ArticleService.getArticleFeed(request);
       return buildSuccessResponse(response);
     case '/api/tags':
       return buildSuccessResponse(request);
@@ -61,10 +65,30 @@ const doPost = e => {
     request.parameter.method.indexOf('/api/profiles/') !== -1 &&
     request.parameter.method.indexOf('/follow') !== -1
   ) {
+    // requires authentication
     // POST /api/profiles/:username/follow
     // DELETE /api/profiles/:username/follow
     // support unfollow as well with same method
     response = ArticleService.FollowProfile(request);
+    return buildSuccessResponse(response);
+  }
+  if (request.parameter.method.indexOf('/api/user') !== -1) {
+    // need to check for user id to fail
+    if (authorized) {
+      // requires authentication, GET proxy'ed to POST
+      response = AuthService.GetCurrentProfile(request);
+      return buildSuccessResponse(response);
+    }
+    if (response.userid) {
+      return buildErrorResponse('Authorization required to get user info');
+    }
+    response = AuthService.RegisterUser(request);
+    return buildSuccessResponse(response);
+  }
+  if (request.parameter.method.indexOf('/api/profiles/') !== -1) {
+    // optional authentication
+    // GET /api/profiles/:username
+    response = ArticleService.getProfile(request);
     return buildSuccessResponse(response);
   }
   if (
@@ -72,6 +96,7 @@ const doPost = e => {
     request.parameter.method.indexOf('/comments/') !== -1
   ) {
     // DELETE /api/articles/:slug/comments/:id
+    // requires authentication
     response = ArticleService.DeleteArticleComment(request);
     return buildSuccessResponse(response);
   }
@@ -80,6 +105,7 @@ const doPost = e => {
     request.parameter.method.indexOf('/comments') !== -1
   ) {
     // POST /api/articles/:slug/comments
+    // requires authentication
     response = ArticleService.CreateArticleComment(request);
     return buildSuccessResponse(response);
   }
@@ -89,18 +115,20 @@ const doPost = e => {
   ) {
     // POST /api/articles/:slug/favorite
     // DELETE /api/articles/:slug/favorite
+    // requires authentication
     response = ArticleService.FavoriteArticle(request);
     return buildSuccessResponse(response);
   }
   if (request.parameter.method.indexOf('/api/articles/') !== -1) {
-    // PUT /api/articles/:slug
+    // POST /api/articles/:slug
     // DELETE /api/articles/:slug
-    response = ArticleService.CreateDeleteArticle(request);
+    // requires authentication
+    response = ArticleService.UpdateDeleteArticle(request);
     return buildSuccessResponse(response);
   }
   if (request.parameter.method.indexOf('/api/articles') !== -1) {
-    // POST /api/articles
-    response = ArticleService.UpdateArticle(request);
+    // PUT /api/articles
+    response = ArticleService.CreateArticle(request);
     return buildSuccessResponse(response);
   }
   // check dynamic routes here?
@@ -131,17 +159,12 @@ const doGet = e => {
   let response = null;
   // route by method
   switch (request.parameter.method) {
-    case '/api/user':
-      response = AuthService.GetCurrentProfile(request);
-      return buildSuccessResponse(response);
     case '/api/articles':
       response = ArticleService.getArticle(request);
       return buildSuccessResponse(response);
-    case '/api/articles/feed':
-      response = ArticleService.getArticleFeed(request);
-      return buildSuccessResponse(response);
+
     case '/api/tags':
-      response = ArticleService.UpdateArticle(request);
+      response = ArticleService.getTags(request);
       return buildSuccessResponse(response);
     default:
       break;

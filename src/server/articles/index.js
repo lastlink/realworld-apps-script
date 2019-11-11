@@ -20,10 +20,13 @@ function getArticles(e) {
   const items = {
     articles: addHeadings(valueRows, headings)
   };
-  for (let i = 0; i < items.articles.length; i++) {
+  for (let i = 0; i < items.articles.length; i += 1) {
     try {
       items.articles[i].author = JSON.parse(items.articles[i].author);
-    } catch (error) {}
+    } catch (error) {
+      Logger.log('Failed to parse author info to json');
+      Logger.log(error);
+    }
     if (!items.articles[i].favoritesCount) {
       items.articles[i].favoritesCount = 0;
       items.articles[i].favorited = true;
@@ -49,11 +52,15 @@ function getArticle(e) {
   return e;
 }
 
-function CreateDeleteArticle(e) {
+function getTags(e) {
   return e;
 }
 
-function UpdateArticle(e) {
+function UpdateDeleteArticle(e) {
+  return e;
+}
+
+function CreateArticle(e) {
   return e;
 }
 
@@ -90,8 +97,9 @@ export default {
   getArticleFeed,
   getArticleComments,
   getArticle,
-  CreateDeleteArticle,
-  UpdateArticle,
+  getTags,
+  UpdateDeleteArticle,
+  CreateArticle,
   FavoriteArticle,
   CreateArticleComment,
   DeleteArticleComment,
