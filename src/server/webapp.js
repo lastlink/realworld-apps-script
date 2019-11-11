@@ -1,4 +1,6 @@
 import { useMock, mock } from './mock';
+import ArticleService from './articles';
+import AuthService from './auth';
 
 function buildSuccessResponse(result) {
   const output = JSON.stringify({
@@ -36,16 +38,20 @@ const doPost = e => {
   } else {
     return buildErrorResponse('Content Type should be application/json', 405);
   }
+  let response = null;
   switch (request.parameter.method) {
     case '/api/users/login':
       // POST
-      return buildSuccessResponse(request);
+      response = AuthService.LoginUser(request);
+      return buildSuccessResponse(response);
     case '/api/users':
       // POST
-      return buildSuccessResponse(request);
+      response = AuthService.UpdateProfile(request);
+      return buildSuccessResponse(response);
     case '/api/user':
       // PUT
-      return buildSuccessResponse(request);
+      response = AuthService.RegisterUser(request);
+      return buildSuccessResponse(response);
     case '/api/tags':
       return buildSuccessResponse(request);
     case e.parameter.method.indexOf('/api/profiles/') !== -1 &&
@@ -53,24 +59,33 @@ const doPost = e => {
       // POST /api/profiles/:username/follow
       // DELETE /api/profiles/:username/follow
       // support unfollow as well with same method
-      return buildSuccessResponse(request);
+      response = ArticleService.FollowProfile(request);
+      return buildSuccessResponse(response);
     case e.parameter.method.indexOf('/api/articles/') !== -1 &&
       e.parameter.method.indexOf('/comments/') !== -1:
       // DELETE /api/articles/:slug/comments/:id
-      return buildSuccessResponse(request);
+      response = ArticleService.DeleteArticleComment(request);
+      return buildSuccessResponse(response);
     case e.parameter.method.indexOf('/api/articles/') !== -1 &&
       e.parameter.method.indexOf('/comments') !== -1:
       // POST /api/articles/:slug/comments
-      return buildSuccessResponse(request);
+      response = ArticleService.CreateArticleComment(request);
+      return buildSuccessResponse(response);
     case e.parameter.method.indexOf('/api/articles/') !== -1 &&
       e.parameter.method.indexOf('/favorite') !== -1:
       // POST /api/articles/:slug/favorite
       // DELETE /api/articles/:slug/favorite
-      return buildSuccessResponse(request);
+      response = ArticleService.FavoriteArticle(request);
+      return buildSuccessResponse(response);
     case e.parameter.method.indexOf('/api/articles/') !== -1:
       // PUT /api/articles/:slug
       // DELETE /api/articles/:slug
-      return buildSuccessResponse(request);
+      response = ArticleService.CreateDeleteArticle(request);
+      return buildSuccessResponse(response);
+    case e.parameter.method.indexOf('/api/articles') !== -1:
+      // POST /api/articles
+      response = ArticleService.UpdateArticle(request);
+      return buildSuccessResponse(response);
     default:
       // check dynamic routes here?
       // /api/profiles/:username
@@ -88,26 +103,34 @@ const doGet = e => {
   if (!e.parameter.method) {
     return buildErrorResponse('GET method query parameter missing.', 404);
   }
+  let response = null;
   // route by method
   switch (e.parameter.method) {
     case '/api/user':
-      return buildSuccessResponse(request);
+      response = AuthService.GetProfile(request);
+      return buildSuccessResponse(response);
     case '/api/articles':
-      return buildSuccessResponse(request);
+      response = ArticleService.UpdateArticle(request);
+      return buildSuccessResponse(response);
     case '/api/articles/feed':
-      return buildSuccessResponse(request);
+      response = ArticleService.UpdateArticle(request);
+      return buildSuccessResponse(response);
     case '/api/tags':
-      return buildSuccessResponse(request);
+      response = ArticleService.UpdateArticle(request);
+      return buildSuccessResponse(response);
     case e.parameter.method.indexOf('/api/profiles/') !== -1:
       // /api/profiles/:username
-      return buildSuccessResponse(request);
+      response = ArticleService.UpdateArticle(request);
+      return buildSuccessResponse(response);
     case e.parameter.method.indexOf('/api/articles/') !== -1 &&
       e.parameter.method.indexOf('/comments') !== -1:
       // GET /api/articles/:slug/comments
-      return buildSuccessResponse(request);
+      response = ArticleService.UpdateArticle(request);
+      return buildSuccessResponse(response);
     case e.parameter.method.indexOf('/api/articles/') !== -1:
       // GET /api/articles/:slug
-      return buildSuccessResponse(request);
+      response = ArticleService.UpdateArticle(request);
+      return buildSuccessResponse(response);
     default:
       // check dynamic routes here?
       // /api/profiles/:username

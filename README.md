@@ -4,6 +4,7 @@
 
 - based off of the [apps-script-starter](https://github.com/labnol/apps-script-starter)
 - [RealWorld Issue 434](https://github.com/gothinkster/realworld/issues/434)
+- will follow the [spec](https://github.com/gothinkster/realworld/tree/master/api) using GET and POST with a cors proxy
 
 ### Getting Started
 
