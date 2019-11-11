@@ -1,28 +1,8 @@
 {
   "timeZone": "Asia/Calcutta",
   "dependencies": {
-    "enabledAdvancedServices": [{
-        "userSymbol": "Gmail",
-        "serviceId": "gmail",
-        "version": "v1"
-      },
-      {
-        "userSymbol": "Drive",
-        "serviceId": "drive",
-        "version": "v2"
-      }
-    ],
-    "libraries": [{
-        "userSymbol": "OAuth1",
-        "libraryId": "1CXDCY5sqT9ph64fFwSzVtXnbjpSfWdRymafDrtIZ7Z_hwysTY7IIhi7s",
-        "version": "16"
-      },
-      {
-        "userSymbol": "OAuth2",
-        "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF",
-        "version": "33"
-      }
-    ]
+    "enabledAdvancedServices": [],
+    "libraries": []
   },
   "webapp": {
     "access": "ANYONE",
@@ -30,11 +10,8 @@
   },
   "exceptionLogging": "STACKDRIVER",
   "oauthScopes": [
-    "https://www.googleapis.com/auth/gmail.send",
-    "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/script.external_request",
     "https://www.googleapis.com/auth/script.scriptapp",
-    "https://www.googleapis.com/auth/script.send_mail",
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/script.container.ui"
   ]

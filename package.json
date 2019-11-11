@@ -1,13 +1,11 @@
 {
-  "name": "apps-script-starter",
-  "version": "3.11.1",
+  "name": "realworld-apps-script",
+  "version": "0.0.3",
   "description": "Setup a local development environment for Google Apps Script",
   "author": {
-    "name": "Amit Agarwal",
-    "email": "amit@labnol.org",
-    "url": "https://ctrlq.org"
+    "name": "lastlink",
+    "url": "https://github.com/lastlink"
   },
-  "homepage": "https://digitalinspiration.com/",
   "license": "MIT",
   "main": "src/index.js",
   "scripts": {
@@ -18,12 +16,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/labnol/apps-script-starter.git"
+    "url": "git+https://github.com/lastlink/realworld-apps-script.git"
   },
   "keywords": [
     "google-apps-script",
     "gsuite",
-    "apps-script"
+    "apps-script",
+    "realworld"
   ],
   "dependencies": {},
   "devDependencies": {
