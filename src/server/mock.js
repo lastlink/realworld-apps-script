@@ -17,14 +17,14 @@ const mock = {
     },
     ePost: {
         "parameter": {
-            "method": "/api/user"
+            "method": "/api/users/login"
         },
         "contextPath": "",
         "contentLength": 107,
         "queryString": "method=/api/users",
         "parameters": {
             "method": [
-                "/api/user"
+                "/api/users/login"
             ]
         },
         postData: {
