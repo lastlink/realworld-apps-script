@@ -1,6 +1,6 @@
 // import CryptoJS from '../helpers/AES';
 import config from '../config';
-import { addHeadings, getArrayOfRowAttribute } from '../utils';
+import { getArrayOfRowAttribute } from '../utils';
 
 // function isAuthorized(e) {
 //     return 'key' in e.parameters && e.parameters.key[0] === config.API_KEY;
@@ -14,6 +14,7 @@ function UpdateProfile(e) {
 }
 
 function encryptPassword(pw, salt) {
+  /* global CryptoJS */
   return CryptoJS.AES.encrypt(pw, salt).toString();
 }
 
@@ -45,14 +46,15 @@ function RegisterUser(e) {
   const rows = wkst.getDataRange().getValues();
   const headings = rows[0];
   const valueRows = rows.slice(1);
-  const ArrayOfRows = addHeadings(valueRows, headings);
   // check unique email and username
-  const usernameList = getArrayOfRowAttribute(ArrayOfRows, headings, 'username');
+  const usernameList = getArrayOfRowAttribute(valueRows, headings, 'username');
   if (usernameList.indexOf(request.user.username) !== -1) {
+    if (!response.errors) response.errors = {};
     response.errors.username = `username already in use`;
   } else {
-    const emailList = getArrayOfRowAttribute(ArrayOfRows, headings, 'email');
+    const emailList = getArrayOfRowAttribute(valueRows, headings, 'email');
     if (emailList.indexOf(request.user.email) !== -1) {
+      if (!response.errors) response.errors = {};
       response.errors.email = `email already in use`;
     }
   }
