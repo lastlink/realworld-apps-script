@@ -31,4 +31,23 @@ function addHeadings(posts, headings) {
   });
 }
 
-export { expBackoff, hasCpuTime, addHeadings };
+/**
+ * can be used for unique email and username check
+ * @param {*} sheetRows
+ * @param {*} headings
+ * @param {*} attr
+ */
+function getArrayOfRowAttribute(sheetRows, headings, attr) {
+  return sheetRows.map(function(rowAsArray) {
+    let attrValue = '';
+
+    const hIndex = headings.indexOf(attr);
+    if (hIndex !== -1) {
+      attrValue = rowAsArray[hIndex];
+    }
+
+    return attrValue;
+  });
+}
+
+export { expBackoff, hasCpuTime, addHeadings, getArrayOfRowAttribute };

@@ -27,6 +27,7 @@ const doPost = e => {
   //   return buildErrorResponse('not authorized', 403);
   // }
   const request = JSON.parse(JSON.stringify(e));
+  let hasPostData = true;
   if (!request.parameter.method) {
     return buildErrorResponse('Post method query parameter missing.', 404);
   }
@@ -34,7 +35,8 @@ const doPost = e => {
     try {
       request.postData.contents = JSON.parse(request.postData.contents);
     } catch (error) {
-      return buildErrorResponse('Post Data is not a vald json', 405);
+      hasPostData = false;
+      // return buildErrorResponse('Post Data is not a vald json', 405);
     }
   } else {
     return buildErrorResponse('Content Type should be application/json', 405);
@@ -77,13 +79,16 @@ const doPost = e => {
     if (authorized) {
       // requires authentication, GET proxy'ed to POST
       response = AuthService.GetCurrentProfile(request);
+      if (response.errors) return buildErrorResponse(response.errors, 415);
+
       return buildSuccessResponse(response);
     }
-    if (response.userid) {
-      return buildErrorResponse('Authorization required to get user info');
+    if (hasPostData) {
+      response = AuthService.RegisterUser(request);
+      return buildSuccessResponse(response);
     }
-    response = AuthService.RegisterUser(request);
-    return buildSuccessResponse(response);
+    // no post data assuming that it was an attempt to get user info
+    return buildErrorResponse('Authorization required to get user info', 403);
   }
   if (request.parameter.method.indexOf('/api/profiles/') !== -1) {
     // optional authentication

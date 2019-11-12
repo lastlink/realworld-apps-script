@@ -1,7 +1,7 @@
 // paste this in to the live ide to enable
 // var useMock = true;
 const mock = {
-    postMethod: false,
+    postMethod: true,
     eGet: {
         "parameter": {
             "method": "/api/articles/"
@@ -16,25 +16,26 @@ const mock = {
         }
     },
     ePost: {
-        parameter: {
-            key: 'asdf'
+        "parameter": {
+            "method": "/api/user"
         },
-        contextPath: '',
-        contentLength: 33,
-        queryString: 'key=asdf',
-        parameters: {
-            key: ['asdf']
+        "contextPath": "",
+        "contentLength": 107,
+        "queryString": "method=/api/users",
+        "parameters": {
+            "method": [
+                "/api/user"
+            ]
         },
         postData: {
-            type: 'application/json',
-            length: 33,
-            contents:
-                `{
-                "func": "checkin",
-                "deviceId": "asdf200",
-                "os": "mock2",
-                "ip": "192.168.1.5",
-                "services": "resilio,pihole"
+            "type": "application/json",
+            "length": 107,
+            contents: `{
+                "user": {
+                    "username": "Jacob",
+                    "email": "jake@jake.jake",
+                    "password": "jakejake"
+                }
             }`,
             name: 'postData'
         }

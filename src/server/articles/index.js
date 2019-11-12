@@ -5,16 +5,10 @@ import { addHeadings } from '../utils';
  * @param {*} e
  */
 function getArticles(e) {
-  // work again
   const spreadsheet = SpreadsheetApp.openById(config.SPREADSHEET_ID);
-  // check if device in attempts or checkins
-  // check checkins
   const wkst = spreadsheet.getSheetByName('articles');
-  // will need to filter length from e
-  const rows = wkst
-    .getDataRange()
-    // .sort({ column: 2, ascending: false })
-    .getValues();
+  // will need to filters for pagination from e
+  const rows = wkst.getDataRange().getValues();
   const headings = rows[0];
   const valueRows = rows.slice(1);
   const items = {
