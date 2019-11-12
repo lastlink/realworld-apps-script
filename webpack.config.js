@@ -59,7 +59,7 @@ module.exports = {
       {
         enforce: 'pre',
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/, '/src/server/cCryptoGS/'],
         loader: 'eslint-loader',
         options: {
           cache: true,
@@ -80,10 +80,15 @@ module.exports = {
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       {
-        from: `${src}/**/*.html`,
+        from: `${src}/server/cCryptoGS/*.js`,
         flatten: true,
         to: destination
       },
+      //  {
+      //   from: `${src}/**/*.html`,
+      //   flatten: true,
+      //   to: destination
+      // },
       {
         from: `${src}/../appsscript.json`,
         to: destination

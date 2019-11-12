@@ -9,6 +9,8 @@
 ### Getting Started
 
 - `npm install` install dependencies
+- copy `src\server\config.template.js` to `src\server\config.js`
+  - change the jwt encryption key and also give the id to the google script you're going to link it to
 - `npx clasp login` Log in to Google clasp and authorize with your Google account. Open the link and authorize.
 
 - Setup database and deploy location (options)
@@ -30,6 +32,8 @@
 - see [ref](https://github.com/softius/php-cross-domain-proxy/blob/master/proxy.php)
   - proxy allows cors issues to be resolved while in browser
   - also DELETE and PUT requests will be forced to POST requests
+  - besides content-type in POST request doesn't support headers, proxy will accept `Authorization: Token {{token}}` and will forward in post body
+
 - run simple server
   - `cd proxy`
   - `php -S localhost:8000`

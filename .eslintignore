@@ -2,3 +2,5 @@ dist
 node_modules
 google_apps_script
 mock.js
+helpers
+src/server/helpers

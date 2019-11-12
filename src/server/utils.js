@@ -19,4 +19,35 @@ const expBackoff = func => {
 
 const hasCpuTime = () => !(Date.now() - START_TIME > ONE_MINUTE * 4);
 
-export { expBackoff, hasCpuTime };
+function addHeadings(posts, headings) {
+  return posts.map(function(postAsArray) {
+    const postAsObj = {};
+
+    headings.forEach(function(heading, i) {
+      postAsObj[heading] = postAsArray[i];
+    });
+
+    return postAsObj;
+  });
+}
+
+/**
+ * can be used for unique email and username check
+ * @param {*} sheetRows
+ * @param {*} headings
+ * @param {*} attr
+ */
+function getArrayOfRowAttribute(sheetRows, headings, attr) {
+  return sheetRows.map(function(rowAsArray) {
+    let attrValue = '';
+
+    const hIndex = headings.indexOf(attr);
+    if (hIndex !== -1) {
+      attrValue = rowAsArray[hIndex];
+    }
+
+    return attrValue;
+  });
+}
+
+export { expBackoff, hasCpuTime, addHeadings, getArrayOfRowAttribute };

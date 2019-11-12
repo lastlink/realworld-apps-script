@@ -3,3 +3,4 @@ dist/
 .clasp.json
 RestDocs
 *.txt
+src/server/config.js

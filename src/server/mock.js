@@ -1,41 +1,42 @@
-const useMock = false;
+// paste this in to the live ide to enable
+// var useMock = true;
+import config from './config'
 const mock = {
     postMethod: true,
     eGet: {
-        parameter: {
-            key: 'asdf'
+        "parameter": {
+            "method": "/api/articles/"
         },
-        contextPath: '',
-        contentLength: -1,
-        queryString: 'key=asdf',
-        parameters: {
-            key: ['asdf']
+        "contextPath": "",
+        "contentLength": -1,
+        "queryString": "method=/api/articles",
+        "parameters": {
+            "method": [
+                "/api/articles"
+            ]
         }
     },
     ePost: {
-        parameter: {
-            key: 'asdf'
+        "parameter": {
+            "method": "/api/user"
         },
-        contextPath: '',
-        contentLength: 33,
-        queryString: 'key=asdf',
-        parameters: {
-            key: ['asdf']
+        "contextPath": "",
+        "contentLength": 107,
+        "queryString": "method=/api/user",
+        "parameters": {
+            "method": [
+                "/api/user"
+            ]
         },
         postData: {
-            type: 'application/json',
-            length: 33,
-            contents:
-                `{
-                "func": "checkin",
-                "deviceId": "asdf200",
-                "os": "mock2",
-                "ip": "192.168.1.5",
-                "services": "resilio,pihole"
+            "type": "application/json",
+            "length": 107,
+            contents: `{
+                "Authorization": "Token `+ config.jwtToken + `"
             }`,
             name: 'postData'
         }
     }
 };
 
-export { useMock, mock };
+export { mock };
