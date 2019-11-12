@@ -9,6 +9,8 @@
 ### Getting Started
 
 - `npm install` install dependencies
+- copy `src\server\config.template.js` to `src\server\config.js`
+  - change the jwt encryption key and also give the id to the google script you're going to link it to
 - `npx clasp login` Log in to Google clasp and authorize with your Google account. Open the link and authorize.
 
 - Setup database and deploy location (options)

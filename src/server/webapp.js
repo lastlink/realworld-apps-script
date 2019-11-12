@@ -42,7 +42,9 @@ const doPost = e => {
     return buildErrorResponse('Content Type should be application/json', 405);
   }
   let response = null;
-  const authorized = false;
+  let jwtObj = null;
+  if (hasPostData) jwtObj = AuthService.isAuthorized(request);
+  // const authorized = false;
   switch (request.parameter.method) {
     case '/api/users/login':
       // POST
@@ -76,9 +78,12 @@ const doPost = e => {
   }
   if (request.parameter.method.indexOf('/api/user') !== -1) {
     // need to check for user id to fail
-    if (authorized) {
+    if (jwtObj && !jwtObj.noAuth) {
       // requires authentication, GET proxy'ed to POST
-      response = AuthService.GetCurrentProfile(request);
+      if (jwtObj && !jwtObj.errors) response = AuthService.GetCurrentProfile(jwtObj);
+      else if (jwtObj.errors) {
+        return buildErrorResponse(jwtObj.errors, 403);
+      }
       if (response.errors) return buildErrorResponse(response.errors, 415);
 
       return buildSuccessResponse(response);

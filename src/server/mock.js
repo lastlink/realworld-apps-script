@@ -1,5 +1,6 @@
 // paste this in to the live ide to enable
 // var useMock = true;
+import config from './config'
 const mock = {
     postMethod: true,
     eGet: {
@@ -17,25 +18,21 @@ const mock = {
     },
     ePost: {
         "parameter": {
-            "method": "/api/users/login"
+            "method": "/api/user"
         },
         "contextPath": "",
         "contentLength": 107,
-        "queryString": "method=/api/users",
+        "queryString": "method=/api/user",
         "parameters": {
             "method": [
-                "/api/users/login"
+                "/api/user"
             ]
         },
         postData: {
             "type": "application/json",
             "length": 107,
             contents: `{
-                "user": {
-                    "username": "Jacob",
-                    "email": "jake@jake.jake",
-                    "password": "jakejake"
-                }
+                "Authorization": "Token `+ config.jwtToken + `"
             }`,
             name: 'postData'
         }
